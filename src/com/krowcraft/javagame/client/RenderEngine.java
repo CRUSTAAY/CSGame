@@ -44,23 +44,34 @@ public class RenderEngine implements Runnable {
 				}
 				startup = false;
 			}
-			if(canframe() && haschanged){
-				Color temp = g2d.getColor();
-				g2d.setColor(Color.WHITE);
-				g2d.fillRect(0, 0, 512, 512);
-				g2d.setColor(temp);
+			if(canframe()){
+				clear();
 				game.iomanager.entitymanager.updateMob();
 				game.appPaint();
+				
+				haschanged = false;
 			}
 		}
 	}
 	
+	private void clear() {
+		Color temp = g2d.getColor();
+		g2d.setColor(Color.WHITE);
+		g2d.fillRect(0, 0, 512, 512);
+		g2d.setColor(temp);
+	}
+
+
+
+
+
 	public BufferedImage getImage(){
 		return img;
 	}
 
 	
 	public void draw(BufferedImage drawimg, int x, int y){
+		haschanged = true;
 		g2d.drawImage(drawimg, x, y, null);
 	}
 	

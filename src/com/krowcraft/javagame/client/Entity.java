@@ -4,18 +4,19 @@ import java.awt.image.BufferedImage;
 
 
 public abstract class Entity {
-	private int x, y, w, h;
+	private int w, h;
+	protected double x, y;
 	private BufferedImage[] sprite;
 	private int currentsprite;
 	
-	public Entity(int x,int y){
+	public Entity(double x,double y){
 		this.x = x;
 		this.y = y;
 		sprite = new BufferedImage[0];
 		
 	}
 	
-	protected void moveTo(int x, int y){
+	protected void moveTo(double x, double y){
 		this.x = x;
 		this.y = y;
 	}
@@ -41,8 +42,8 @@ public abstract class Entity {
 	
 	
 	
-	protected int getX(){return x;}
-	protected int getY(){return y;}
+	protected double getX(){return x;}
+	protected double getY(){return y;}
 	protected int getW(){return w;}
 	protected int getH(){return h;}
 	

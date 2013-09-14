@@ -38,7 +38,7 @@ public class EntityManager {
 	
 	public void ImageMob(){
 		for(Mob m: mobarray){
-			game.engine.draw(m.getSprite(), m.getX(), m.getY());
+			game.engine.draw(m.getSprite(),(int) m.getX(),(int) m.getY());
 		}
 		
 	}

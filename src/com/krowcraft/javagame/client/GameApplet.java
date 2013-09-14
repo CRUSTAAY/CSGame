@@ -18,13 +18,18 @@ public class GameApplet extends Applet{
 		engine = new RenderEngine(this);
 		iomanager.initSprite("sprite.png", 32, 32, 16, 16);
 		
+
+		
+		mob = new Mob(30, 30, 16, 16, this);
+		mob.setSprite(5, 1, true, this);
+		mob.setSpeed(5);
+		mob.moveto(60, 60);
 		
 		
-		mob = new Mob(30, 20, 16, 16, this);
-		mob.setSprite(5, 1, false, this);
-		mob.moveto(40, 62);
-		
-		
+		Mob marb = new Mob(30, 30, 16, 16, this);
+		marb.setSprite(1, 1, false, this);
+		marb.setSpeed(5.2);
+		marb.moveto(60, 60);
 		
 
 		
