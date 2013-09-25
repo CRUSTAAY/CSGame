@@ -24,7 +24,7 @@ public class IOManager extends GameApplet{
 	
 	//Startup Key Listener
 	public void initKeyManager(){
-		keymanager = new KeyManager();
+		keymanager = new KeyManager(game);
 		keymanageractive = true;
 		addKeyListener(keymanager);
 	}public boolean keymanagerStatus(){return keymanageractive;}
@@ -37,7 +37,7 @@ public class IOManager extends GameApplet{
 	
 	//Startup Mouse Listener
 	public void initMouseManager(){
-		mousemanager = new MouseManager();
+		mousemanager = new MouseManager(game);
 		mousemanageractive = true;
 	}public boolean MouseManagerStatus(){return mousemanageractive;}
 	

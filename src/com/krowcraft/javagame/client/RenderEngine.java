@@ -1,13 +1,15 @@
 package com.krowcraft.javagame.client;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class RenderEngine implements Runnable {
+public class RenderEngine implements Runnable { //NOTE flickering occurs at about 3200 entity's, buffer fails at 4000
 
+	@SuppressWarnings("unused")
 	private static final long serialVersionUID = 518891768722222542L;
+	private boolean terrainbuild = false;
+	@SuppressWarnings("unused")
 	private boolean haschanged = false;
 	private boolean alive, startup;
 	public Thread renderthread;
@@ -15,6 +17,7 @@ public class RenderEngine implements Runnable {
 	protected Graphics2D g2d;
 	private long CFlastnanotime, FClastnanotime;
 	private int FPS;
+	private BufferedImage terrain, buffered;
 	GameApplet game;
 	
 	public RenderEngine(GameApplet gameapp){
@@ -24,12 +27,25 @@ public class RenderEngine implements Runnable {
 		renderthread = new Thread(this);
 		haschanged = true;
 		img = new BufferedImage(512, 512, BufferedImage.TYPE_4BYTE_ABGR);
-		g2d = (Graphics2D) img.getGraphics();
+		buffered = new BufferedImage(512, 512, BufferedImage.TYPE_4BYTE_ABGR);
+		terrain = new BufferedImage(512,512,BufferedImage.TYPE_4BYTE_ABGR);
+		g2d = (Graphics2D) buffered.getGraphics();
 		renderthread.start();
 	}
 	
 
-	
+	public BufferedImage drawTerrain(int pos){
+		if(!terrainbuild && game.iomanager.spriteactive){
+			Graphics2D G =(Graphics2D) terrain.getGraphics();
+			for(int z = 0; z < game.iomanager.sprite.getRows();z++){
+				for(int y = 0; y <  game.iomanager.sprite.getCols();y++){
+					G.drawImage(game.iomanager.sprite.getImage(pos, false),z * game.iomanager.sprite.getWidth(),y * game.iomanager.sprite.getHeight(),null);
+				}
+			}
+			terrainbuild = true;
+			return terrain;
+		}else{return terrain;}
+	}
 	
 	
 	@Override
@@ -39,15 +55,16 @@ public class RenderEngine implements Runnable {
 				try {
 					Thread.sleep(50);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				startup = false;
 			}
 			if(canframe()){
 				clear();
-				game.iomanager.entitymanager.updateMob();
+				draw(drawTerrain(0),0,0);
+				game.iomanager.entitymanager.update();
 				game.appPaint();
+				img = buffered;
 				
 				haschanged = false;
 			}
@@ -90,7 +107,7 @@ public class RenderEngine implements Runnable {
 	private boolean canframe(){ //should the game render a frame this time?
 		Long CFcurrentNano = util.getnano();
 		Long dif = CFcurrentNano - CFlastnanotime;
-		if(dif >= 20000000){
+		if(dif >= 10000000){
 			framecount();
 			CFlastnanotime = CFcurrentNano;
 			return true;

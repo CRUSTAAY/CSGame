@@ -2,17 +2,24 @@ package com.krowcraft.javagame.client;
 
 
 import com.krowcraft.javagame.client.util;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
+
 import javax.imageio.ImageIO;
 
 public class Sprite{
+	@SuppressWarnings("unused")
+	private int width, height, rows, cols;
 	private boolean success = true;
 	private BufferedImage[] sprite;
 	
 	
 	public Sprite(String file, int col, int row, int w, int h){
-		
+		width = w;
+		height = h;
+		rows = row;
+		cols = col;
 		BufferedImage image = new BufferedImage(col * h, row * w, BufferedImage.TYPE_4BYTE_ABGR);
 		image = loadImage(image, file);
 		
@@ -88,7 +95,24 @@ public class Sprite{
 	
 	
 	public boolean status() {return success;}
+
+
+	public int getWidth() {
+		return width;
+	}
 	
+	public int getHeight() {
+		return height;
+	}
+
+	public int getRows(){
+		return rows;
+	}
+	
+	public int getCols(){
+		return rows;
+	}
+
 	
 	
 	

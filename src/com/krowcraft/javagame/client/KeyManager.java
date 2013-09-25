@@ -10,7 +10,10 @@ public class KeyManager implements KeyListener{
 	private int keypress;
 	private Direction direction;
 	
-	public KeyManager() {reset();}
+	public KeyManager(GameApplet game) {
+		game.addKeyListener(this);
+		reset();
+		}
 
 	@Override
 	public void keyPressed(KeyEvent e) {

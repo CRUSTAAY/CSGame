@@ -40,7 +40,13 @@ public abstract class Entity {
 		}
 	}
 	
-	
+	public void setSprite() {
+		
+		for(int z = 0; z < sprite.length; z++){
+			sprite[z] = null;
+		}
+		
+	}
 	
 	protected double getX(){return x;}
 	protected double getY(){return y;}
